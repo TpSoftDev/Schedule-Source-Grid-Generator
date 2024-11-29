@@ -1,4 +1,4 @@
 from enum import Enum
 
 class Paths(Enum):
-    SS_AVAILABILITY = "/api/io/GlobalAvailDay/json"
+    SS_AVAILABILITY = "/api/io/GlobalAvailDay/"

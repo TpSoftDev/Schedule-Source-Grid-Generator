@@ -1,4 +1,13 @@
+import sys
+import os
+
+# Add project root to Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+sys.path.append(project_root)
+
 import requests
+from controllers.utils.credentials import load_creds
+from controllers.utils.URLs import URLs
 
 class BaseAuth:
     """Base authentication class for all API interactions"""
@@ -55,4 +64,36 @@ class BaseAuth:
             "Authorization": self.api_token,
             "SessionId": self.session_id
         } 
+        
+
+
+#Test base_auth
+if __name__ == "__main__":
+    # Load credentials
+    creds = load_creds()
+    credentials = {
+        "code": creds.code,
+        "user": creds.user,
+        "password": creds.password
+    }
+    
+    # Initialize BaseAuth
+    auth = BaseAuth(URLs.TEST_SITE_AUTH.value, credentials)
+    
+    # Test authentication
+    print("Testing authentication...")
+    success = auth.authenticate()
+    
+    if success:
+        print("\n✅ Authentication successful!")
+        print(f"Session ID: {auth.session_id}")
+        print(f"API Token: {auth.api_token}")
+        
+        # Test getting headers
+        headers = auth.get_auth_headers()
+        print("\nAuthentication Headers:")
+        for key, value in headers.items():
+            print(f"{key}: {value}")
+    else:
+        print("\n❌ Authentication failed!")
         
