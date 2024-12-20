@@ -93,7 +93,7 @@ if __name__ == "__main__":
     if api.authenticate():
         print("\n✅ Authentication successful!")
         try:
-            EmployeeExternalId = "223133927"  
+            EmployeeExternalId = "944816917"  
             print(f"\n[INFO] Fetching availability for EmployeeExternalId: {EmployeeExternalId}")
             availability = api.get_global_availability(EmployeeExternalId)
             print("\n[INFO] Employee Availability:", availability)
