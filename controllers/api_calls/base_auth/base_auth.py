@@ -6,7 +6,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..
 sys.path.append(project_root)
 
 import requests
-from controllers.utils.credentials import load_creds
+from controllers.utils.Credentials import load_creds
 from controllers.utils.URLs import URLs
 
 class BaseAuth:
