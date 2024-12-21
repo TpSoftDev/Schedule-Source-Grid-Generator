@@ -10,7 +10,7 @@ sys.path.append(project_root)
 from controllers.api_calls.base_auth.base_auth import BaseAuth
 from controllers.utils.URLs import URLs
 from controllers.utils.Paths import Paths
-from controllers.utils.credentials import load_creds
+from controllers.utils.Credentials import load_creds
 
 
 
@@ -87,15 +87,15 @@ if __name__ == "__main__":
         "user": creds.user,
         "password": creds.password
     }
-    
+
     # Initialize ScheduleSourceAPI
     api = ScheduleSourceAPI(URLs.TEST_SITE_AUTH.value, credentials)
-    
+
     # Authenticate and test get_global_availability
     if api.authenticate():
         print("\n✅ Authentication successful!")
         try:
-            EmployeeExternalId = "944816917"  
+            EmployeeExternalId = "170601496"
             print(f"\n[INFO] Fetching availability for EmployeeExternalId: {EmployeeExternalId}")
             availability = api.get_global_availability(EmployeeExternalId)
             print("\n[INFO] Employee Availability:", availability)
