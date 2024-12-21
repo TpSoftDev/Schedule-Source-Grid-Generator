@@ -1,0 +1,32 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Schedule Source Grid Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-container {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Schedule Source Grid Generator</h1>
+    
+    <div class="form-container">
+        <form method="POST">
+            <label for="external_id">Employee External ID:</label><br>
+            <input type="text" id="external_id" name="external_id" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+  </body>
+</html>

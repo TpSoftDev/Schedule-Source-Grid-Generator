@@ -59,6 +59,8 @@ class ScheduleSourceAPI(BaseAuth):
                 print(f"[INFO] New Headers after re-authentication: {headers}")
                 response = requests.get(endpoint, headers=headers, params=params)
 
+                
+                
             # Raise an error for bad responses
             response.raise_for_status()
             return response.json()
