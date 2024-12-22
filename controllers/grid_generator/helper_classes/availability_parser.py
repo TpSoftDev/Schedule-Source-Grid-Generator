@@ -7,7 +7,8 @@ sys.path.append(project_root)
 
 from controllers.api_calls.test_site.schedule_source_api import ScheduleSourceAPI
 from controllers.utils.Credentials import load_creds
-from controllers.grid_generator.helper_classes.time_converter import time_range_to_dict
+from controllers.grid_generator.helper_classes.time_converter import time_range_to_dict, convert_to_time
+from datetime import datetime, time
 
 from controllers.utils.URLs import URLs
 
@@ -38,7 +39,6 @@ def parse_availability(studentId):
                 dayRangeStr = day["AvailableRanges"]
                 dayId = day["DayId"]
 
-
                 #Use helper function to get a dictionary of start/end times for 1 day
                 dayRangeDict = parse_availability_for_one_day(dayRangeStr)
                 dict.append({
@@ -55,6 +55,12 @@ def parse_availability(studentId):
 
 #TODO: Document
 def parse_availability_for_one_day(availStr):
+    if not availStr:
+        return [{
+            "start_time": convert_to_time("", -1),
+            "end_time": convert_to_time("", 1)
+        }]
+
     rangesDict = []
     # String array with each time range
     rangesStr = availStr.split(';')
@@ -65,6 +71,5 @@ def parse_availability_for_one_day(availStr):
         rangesDict.append(rangeDict)
 
     return rangesDict
-
 
 

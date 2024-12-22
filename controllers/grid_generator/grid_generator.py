@@ -20,47 +20,34 @@ FINAL_HOUR_IN_GRID = 22
 NUM_INTERVALS_PER_HOUR = 6
 
 
-def fill_in_day(ws, dayId, availableRanges):
+def fill_in_day(wb, dayId, availableRanges, color):
+    ws = wb.active
     # Sunday (ID = 1) starts at row 3 (1 + 2) = 3
     rowNum = dayId + 2
     colNum = 2
-    color = 'FFFF00'
 
     for hour in range(6, FINAL_HOUR_IN_GRID):
-        minute = 5
-        while(minute <= 60):
-            #Flag for if we are on hour 60, hour minutes get reset so we must break the loop
-            edge_case_found = 0
-
-            #When at the last minute of hour h, we treat it as hour=h+1, minute = 0
-            if minute == 60:
-                minute = 0
-                newHour = hour + 1
-                currentTime = datetime.time(hour=newHour, minute=minute)
-                edge_case_found = 1
-
-            else:
-                currentTime = datetime.time(hour=hour, minute=minute)
+        minute = 0
+        while(minute < 60):
+            currentTime = datetime.time(hour=hour, minute=minute)
 
             if (not is_available(currentTime, availableRanges)):
                 fill_in_cell(ws, rowNum, colNum, color)
 
-            if (edge_case_found == 1):
-                print("FOUND EDGE CASE")
-                break
-
             minute += 5
             colNum += 1
+
+    wb.save("Timetable template.xlsx")
 
 
 #TODO Document
 def is_available(currentTime, availableRanges):
-    print()
     for range in availableRanges:
-        if currentTime < range["end_time"] and currentTime > range["start_time"]:
+        if currentTime < range["end_time"] and currentTime >= range["start_time"]:
             return True
 
     return False
+
 
 #TODO document
 def fill_in_cell(ws, row, col, color):
@@ -72,16 +59,58 @@ def fill_in_cell(ws, row, col, color):
 
 
 
+def clear_row(wb, dayId):
+    ws = wb.active
+    rowNum = dayId + 2
+    colNum = 2
+
+    for hour in range(6, FINAL_HOUR_IN_GRID):
+        minute = 0
+        while(minute < 60):
+            # if we are on Monday, Wednesday, or Friday
+            if dayId % 2 == 0:
+                fill_in_cell(ws, rowNum, colNum, "FFFFFF")
+            elif dayId == 1 or dayId == 7:
+                fill_in_cell(ws, rowNum, colNum, "bababa")
+            else:
+                fill_in_cell(ws, rowNum, colNum, "e0e0e0")
+
+            colNum += 1
+            minute += 5
+
+    wb.save("Timetable template.xlsx")
+
+
+def clearGrid(wb):
+    for i in range(7):
+        dayId = i + 1
+        clear_row(wb, dayId)
+
+    wb.save("Timetable template.xlsx")
+
+
+def fillInSchedule(wb, studentId, color):
+    avail = parse_availability(studentId)
+    pass
+    if avail:
+        for day in avail:
+            print(day)
+            fill_in_day(wb, day["DayId"], day["DayRanges"], color)
+    else :
+        print("NO AVAILABILITY")
+
+    wb.save("Timetable template.xlsx")
+
+
 
 def main():
-
     wb = load_workbook("Timetable template.xlsx")
-    ws = wb.active
 
-    avail = parse_availability("170601496")
-    monday = avail[1]
-    print(monday)
-    fill_in_day(ws, 2, monday["DayRanges"])
+    clearGrid(wb)
+    color = "ffa07a"
+
+    studentId = input("Enter the Student ID Number: ")
+    fillInSchedule(wb, studentId, color)
 
     wb.save("Timetable template.xlsx")
 
