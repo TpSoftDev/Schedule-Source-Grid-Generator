@@ -1,3 +1,7 @@
+#Base Auth
+#This is the base authentication class for all API interactions
+
+#Importing the necessary libraries For MacOS
 import sys
 import os
 
@@ -67,7 +71,7 @@ class BaseAuth:
         
 
 
-#Test base_auth
+# Test base_auth
 if __name__ == "__main__":
     # Load credentials
     creds = load_creds()

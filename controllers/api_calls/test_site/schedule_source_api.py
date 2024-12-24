@@ -15,22 +15,71 @@ from controllers.utils.Credentials import load_creds
 
 
 class ScheduleSourceAPI(BaseAuth):
-    """Handles Schedule Source API interactions for employee global availability."""
+    """
+    Schedule Source API client for handling employee availability data.
     
+    This class provides methods to interact with the Schedule Source API,
+    specifically focusing on retrieving employee global availability information.
+    It handles authentication, request management, and automatic token refresh.
+    
+    Inherits from:
+        BaseAuth: Provides base authentication functionality
+    
+    Attributes:
+        base_url (str): Base URL for the Schedule Source API endpoints
+        api_token (str): Current API token for authentication (inherited)
+        session_id (str): Current session ID (inherited)
+    """
+
+
+    #------------------------------------------------------------------------ Constructor ------------------------------------------------------------------------#
     def __init__(self, auth_url: str, credentials: dict):
-        """Initialize with test site authentication and authenticate immediately."""
+        """
+        Initialize the Schedule Source API client.
+        
+        Args:
+            auth_url (str): Authentication endpoint URL
+            credentials (dict): Dictionary containing authentication credentials
+                            Required keys: 'code', 'user', 'password'
+        
+        Note:
+            Automatically authenticates upon initialization
+        """
         super().__init__(auth_url=auth_url, credentials=credentials)
         self.base_url = URLs.TEST_BASE_URL.value.rstrip('/')
         self.authenticate()
 
+    
+    #------------------------------------------------------------------------ Get Global Availability ------------------------------------------------------------------------#
     def get_global_availability(self, EmployeeExternalId: str) -> dict:
-        """Fetch an employee's global availability ranges from Schedule Source."""
+        """
+        Fetch an employee's global availability ranges from Schedule Source.
+        
+        Retrieves the availability schedule for a specific employee, including
+        their available time ranges and basic information.
+        
+        Args:
+            EmployeeExternalId (str): Unique identifier for the employee
+        
+        Returns:
+            dict: JSON response containing employee availability data
+                Format includes:
+                - AvailableRanges: Time ranges when employee is available
+                - EmployeeExternalId: Employee's unique identifier
+                - DayId: Day identifier
+                - FirstName: Employee's first name
+        
+        Raises:
+            requests.exceptions.RequestException: If the API request fails
+            
+
+        """
         try:
             # Construct the endpoint URL
             endpoint = f"{self.base_url}{Paths.SS_AVAILABILITY.value}"
             print(f"\n[INFO] Endpoint URL: {endpoint}")
 
-            # Set up headers
+            # Set up headers with authentication tokens
             headers = {
                 "Content-Type": "application/json",
                 "x-api-token": self.api_token,
@@ -45,7 +94,7 @@ class ScheduleSourceAPI(BaseAuth):
                 'EmployeeExternalId': EmployeeExternalId
             }
 
-            # Make the request
+            # Make the API request
             response = requests.get(endpoint, headers=headers, params=params)
 
             # Handle unauthorized access by re-authenticating
@@ -78,8 +127,20 @@ class ScheduleSourceAPI(BaseAuth):
             raise  # Re-raise the exception to propagate the error
 
 
-# Main function to test the ScheduleSourceAPI
+#------------------------------------------------------------------------ Test section ------------------------------------------------------------------------#    
 if __name__ == "__main__":
+    """
+    Test functionality of the ScheduleSourceAPI class.
+    
+    This section demonstrates the usage of the ScheduleSourceAPI by:
+    1. Loading credentials from configuration
+    2. Initializing the API client
+    3. Testing authentication
+    4. Retrieving employee availability data
+    
+    Example Usage:
+        $ python schedule_source_api.py
+    """
     # Load credentials and authenticate
     creds = load_creds()
     credentials = {
@@ -91,7 +152,7 @@ if __name__ == "__main__":
     # Initialize ScheduleSourceAPI
     api = ScheduleSourceAPI(URLs.TEST_SITE_AUTH.value, credentials)
 
-    # Authenticate and test get_global_availability
+    # Test authentication and availability retrieval
     if api.authenticate():
         print("\n✅ Authentication successful!")
         try:

@@ -31,6 +31,13 @@ Usage:
 
 """
 
+import sys
+import os
+
+# Add project root to Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
+
 import datetime
 
 
@@ -43,11 +50,12 @@ from controllers.grid_generator.helper_classes.availability_parser import parse_
 
 FINAL_HOUR_IN_GRID = 22
 NUM_INTERVALS_PER_HOUR = 6
-GRID_FILE_NAME = "Timetable template.xlsx"
+#Change this to the path of the timetable template (For Mac)
+GRID_FILE_NAME = os.path.join(os.path.dirname(__file__), "Timetable template.xlsx")
 GRID_FILL_COLOR = "ffa07a"
 
 
-def fill_in_day(ws, dayId, availableRanges, color):
+def fill_in_day(ws, dayId, availableRanges, color): 
     """
     Fills in the day/row for the students' class schedule based on the student's availability
 
