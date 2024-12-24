@@ -1,6 +1,7 @@
 #Base Auth
-#This is the base authentication class for all API interactions
 
+
+#------------------------------------------------------------------------ Imports ------------------------------------------------------------------------#
 #Importing the necessary libraries For MacOS
 import sys
 import os
@@ -13,6 +14,7 @@ import requests
 from controllers.utils.Credentials import load_creds
 from controllers.utils.URLs import URLs
 
+#------------------------------------------------------------------------ BaseAuth Class ------------------------------------------------------------------------#
 class BaseAuth:
     """Base authentication class for all API interactions"""
     
@@ -23,7 +25,8 @@ class BaseAuth:
         self.session_id = None
         self.api_token = None
         self._is_authenticated = False
-        
+
+#------------------------------------------------------------------------ Authenticate ------------------------------------------------------------------------#
     def authenticate(self):
         """Authenticates with the API and stores session tokens"""
         try:
@@ -56,7 +59,8 @@ class BaseAuth:
             print(f"Authentication failed: {str(e)}")
             self._is_authenticated = False
             return False
-
+        
+#------------------------------------------------------------------------ Get Auth Headers ------------------------------------------------------------------------#
     def get_auth_headers(self):
         """Returns headers with authentication tokens"""
         if not self._is_authenticated:
@@ -71,7 +75,7 @@ class BaseAuth:
         
 
 
-# Test base_auth
+#------------------------------------------------------------------------ Test base_auth ------------------------------------------------------------------------#
 if __name__ == "__main__":
     # Load credentials
     creds = load_creds()

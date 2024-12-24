@@ -1,3 +1,9 @@
+# Schedule Source API
+# This is the Schedule Source API class for handling employee availability data.
+# It provides methods to interact with the Schedule Source API, specifically focusing on retrieving employee global availability information.
+# It handles authentication, request management, and automatic token refresh.
+
+#------------------------------------------------------------------------ Imports ------------------------------------------------------------------------#
 import sys
 import os
 import requests
@@ -13,7 +19,7 @@ from controllers.utils.Paths import Paths
 from controllers.utils.Credentials import load_creds
 
 
-
+#------------------------------------------------------------------------ Schedule Source API ------------------------------------------------------------------------#
 class ScheduleSourceAPI(BaseAuth):
     """
     Schedule Source API client for handling employee availability data.
