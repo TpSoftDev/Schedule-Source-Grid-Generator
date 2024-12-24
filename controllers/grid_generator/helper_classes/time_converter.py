@@ -1,7 +1,44 @@
+"""
+This file contains utility functions for parsing and converting time-related strings into usable Python `datetime.time` objects. These utilities are designed to handle various formats of time inputs and transform them into structured time ranges for further processing.
+
+Overview:
+- **`convert_to_time`:** Converts a string representation of a time (e.g., "8am", "12:30pm") into a `datetime.time` object. Handles cases with missing minutes and edge cases like "midnight" or "latenight."
+- **`time_range_to_dict`:** Parses a time range string (e.g., "8am-3pm") and converts it into a dictionary with `start_time` and `end_time` keys, where the values are `datetime.time` objects.
+
+Dependencies:
+- Python's `datetime` module for parsing and working with time.
+
+Key Functions:
+1. `convert_to_time(time_str, indicator)`:
+2. `time_range_to_dict(time_range_str)`:
+
+Usage:
+- These utilities are intended to preprocess time-related input strings and convert them into structured Python objects for further processing.
+
+"""
 from datetime import datetime
 
-#TODO: Document
+
 def convert_to_time(time_str, indicator):
+    """
+    converts the string value of a time into a datetime.time object.
+
+
+    Parameters:
+        time_str (str):
+            The string representation of the time, e.g., "8am", "12:30pm", or "11:59pm".
+            If the string is empty or invalid, the `indicator` determines the fallback value.
+        indicator (int):
+            Determines the fallback time when `time_str` is not provided:
+            - `-1`: Returns midnight (`00:00`).
+            - `1`: Returns the last possible minute of the day (`23:59`).
+
+    Returns:
+        datetime.time:
+            A `datetime.time` object representing the parsed time from the string, or
+            a fallback value (`00:00` or `23:59`) if the string is empty.
+
+        """
     if not time_str:
         if indicator == -1:
             midnight = datetime.strptime("00:00", "%H:%M")
@@ -31,10 +68,34 @@ def convert_to_time(time_str, indicator):
     return time_obj_time
 
 
-
-
-#TODO: Document
 def time_range_to_dict(time_range_str):
+    """
+    Converts a time range string into a dictionary with structured start and end times.
+
+    This function takes a string representation of a time range (e.g., "8am-3pm") and
+    parses it into a dictionary containing `start_time` and `end_time` as `datetime.time` objects.
+    The `convert_to_time` function is used to parse each individual time within the range.
+
+    Parameters:
+        time_range_str (str):
+            The string representation of the time range, e.g., "8am-3pm".
+            The format should consist of two times separated by a dash ("-"), with optional spaces.
+
+    Returns:
+        dict:
+            A dictionary containing:
+            - `'start_time'`: A `datetime.time` object representing the start of the range.
+            - `'end_time'`: A `datetime.time` object representing the end of the range.
+
+
+        None: (if an exception is raised).
+            If an error occurs during parsing, the function logs the error and returns `None`.
+
+    Exceptions:
+        - This function catches and logs exceptions such as:
+            - `ValueError` if the input string format is incorrect or invalid.
+            - `IndexError` if the input string does not contain both start and end times.
+    """
 
     try:
         # Remove any spaces
