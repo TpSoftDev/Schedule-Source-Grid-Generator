@@ -1,14 +1,15 @@
-#------------------------------------------------------------------------ Imports ------------------------------------------------------------------------#
+#------------------------------------------------------- Imports ------------------------------------------------------#
 import os
 import sys
 from pathlib import Path
 
-#------------------------------------------------------------------------ Path Setup ------------------------------------------------------------------------#
+
+#------------------------------------------------------- Path Setup ------------------------------------------------------#
 # Get the absolute path of the current file and resolve any symlinks
 # Then navigate up 2 levels to reach the project root:
 # base_auth.py -> auth -> controllers -> app -> [project_root]
 root_dir = Path(__file__).resolve().parents[2]
-
+    
 # Add the project root to Python's path
 # This allows Python to find our modules regardless of where the script is run from
 sys.path.append(str(root_dir))
@@ -18,7 +19,8 @@ import requests
 from utils.Credentials import load_creds
 from utils.URLs import URLs
 
-#------------------------------------------------------------------------ BaseAuth Class ------------------------------------------------------------------------#
+
+#------------------------------------------------------- BaseAuth ------------------------------------------------------#
 class BaseAuth:
     """Base authentication class for all API interactions"""
     
@@ -30,7 +32,8 @@ class BaseAuth:
         self.api_token = None
         self._is_authenticated = False
 
-#------------------------------------------------------------------------ Authenticate ------------------------------------------------------------------------#
+
+#------------------------------------------------------- Authenticate ------------------------------------------------------#
     def authenticate(self):
         """Authenticates with the API and stores session tokens"""
         try:
@@ -64,7 +67,8 @@ class BaseAuth:
             self._is_authenticated = False
             return False
         
-#------------------------------------------------------------------------ Get Auth Headers ------------------------------------------------------------------------#
+
+#------------------------------------------------------- get_auth_headers ------------------------------------------------------#
     def get_auth_headers(self):
         """Returns headers with authentication tokens"""
         if not self._is_authenticated:
@@ -78,8 +82,7 @@ class BaseAuth:
         } 
         
 
-
-#------------------------------------------------------------------------ Test base_auth ------------------------------------------------------------------------#
+#------------------------------------------------------- Test Section ------------------------------------------------------#
 if __name__ == "__main__":
     # Load credentials
     creds = load_creds()

@@ -1,13 +1,24 @@
-/* Color Variables */
+/* ==========================================================================
+   ISU Website Style Guide
+   This stylesheet defines the visual appearance and layout for the ISU website
+   Color scheme based on ISU brand guidelines with accessibility considerations
+   ========================================================================== */
+
+/* Global Color Variables
+   Define brand colors and common values for consistent theming
+   ========================================================================== */
 :root {
-  --isu-red: #c8102e;
-  --warm-wood: #deb887;
-  --light-gray: #f8f9fa;
-  --off-white: #fff9f5;
-  --dark-text: #2c2c2c;
+  --isu-red: #c8102e;      /* Official ISU brand red */
+  --warm-wood: #deb887;    /* Accent color for warm highlights */
+  --light-gray: #f8f9fa;   /* Background for subtle contrast */
+  --off-white: #fff9f5;    /* Softer white for main background */
+  --dark-text: #2c2c2c;    /* Primary text color for readability */
 }
 
-/* Navbar styles */
+/* Navigation Bar Styling
+   Defines the top navigation bar appearance and behavior
+   Uses ISU red background with white text for contrast
+   ========================================================================== */
 .navbar {
     background-color: var(--isu-red);
     padding: 1.25rem 2.5rem;
@@ -23,11 +34,14 @@
     position: relative;
 }
 
-/* Logo styling options - try each one separately to see which works best */
+/* Logo Styling
+   Controls the appearance and behavior of the ISU logo in the navbar
+   Includes hover effects and gradient overlay for smooth transitions
+   ========================================================================== */
 .nav-logo {
-          height: 50px;
-          width: auto;
-          mix-blend-mode: multiply;
+    height: 50px;
+    width: auto;
+    mix-blend-mode: multiply;  /* Helps logo blend better with background */
 }
 
 /* Create a subtle gradient overlay */
@@ -92,11 +106,14 @@
     background-color: rgba(255,255,255,0.95);
 }
 
-/* Main content styles */
+/* Main Content Layout
+   Defines the overall page structure and typography
+   Includes responsive container sizing and spacing
+   ========================================================================== */
 body {
-    font-family: 'Inter', Arial, sans-serif;
-    background-color: var(--off-white);
-    padding-top: 80px;
+    font-family: 'Inter', Arial, sans-serif;  /* Modern, readable font stack */
+    background-color: var(--off-white);        
+    padding-top: 80px;                        /* Compensates for fixed navbar */
     color: var(--dark-text);
 }
 
@@ -105,12 +122,16 @@ body {
     padding: 2rem;
 }
 
+/* Form Styling
+   Defines the appearance of form elements and containers
+   Includes hover and focus states for better user interaction
+   ========================================================================== */
 .form-container {
     background-color: white;
     padding: 2.5rem;
     border-radius: 15px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    border: 1px solid rgba(200,16,46,0.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);  /* Subtle elevation effect */
+    border: 1px solid rgba(200,16,46,0.1);    /* Light ISU red border */
 }
 
 h1 {
@@ -136,12 +157,16 @@ h1 {
     box-shadow: 0 0 0 3px rgba(200,16,46,0.1);
 }
 
+/* Button States and Animations
+   Defines interactive states for buttons
+   Includes hover effects, loading states, and transitions
+   ========================================================================== */
 .btn-primary {
     background-color: var(--isu-red);
     border: none;
     padding: 0.75rem 1.5rem;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease;  /* Smooth transition for all properties */
 }
 
 .btn-primary:hover {
@@ -150,6 +175,10 @@ h1 {
     box-shadow: 0 4px 12px rgba(200,16,46,0.2);
 }
 
+/* Loading State Styles
+   Defines appearances for loading/processing states
+   Includes spinner animations and disabled states
+   ========================================================================== */
 .btn-primary.loading {
     background-color: var(--isu-red);
     opacity: 0.8;
@@ -158,5 +187,5 @@ h1 {
 
 .spinner-border {
     border-color: white;
-    border-right-color: transparent;
+    border-right-color: transparent;  /* Creates spinning animation effect */
 }

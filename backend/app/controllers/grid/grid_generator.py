@@ -30,7 +30,7 @@ Usage:
 - The updated Excel file will be saved with the same name, overwriting the template.
 
 """
-#------------------------------------------------------------------------ Imports ------------------------------------------------------------------------#
+#------------------------------------------------------- Imports ------------------------------------------------------#
 import sys
 import os
 from pathlib import Path
@@ -47,7 +47,8 @@ sys.path.append(str(root_dir))
 # Now we can import our local modules
 from controllers.grid.helper_classes.availability_parser import parse_availability
 
-#------------------------------------------------------------------------ Constants ------------------------------------------------------------------------#
+
+#------------------------------------------------------- Constants ------------------------------------------------------#
 FINAL_HOUR_IN_GRID = 22
 NUM_INTERVALS_PER_HOUR = 6
 GRID_FILE_NAME = Path(__file__).parent / "Timetable template.xlsx"

@@ -3,13 +3,14 @@
 # It provides methods to interact with the Schedule Source API, specifically focusing on retrieving employee global availability information.
 # It handles authentication, request management, and automatic token refresh.
 
-#------------------------------------------------------------------------ Imports ------------------------------------------------------------------------#
+#------------------------------------------------------- Imports ------------------------------------------------------#
+
 import sys
 import os
 from pathlib import Path
 import requests
 
-#------------------------------------------------------------------------ Path Setup ------------------------------------------------------------------------#
+#------------------------------------------------------- Path Setup ------------------------------------------------------#
 # Get the absolute path of the current file and resolve any symlinks
 # Then navigate up 3 levels to reach app directory:
 # schedule_source_api.py -> api -> controllers -> app
@@ -23,7 +24,7 @@ from utils.Paths import Paths
 from utils.Credentials import load_creds
 
 
-#------------------------------------------------------------------------ Schedule Source API ------------------------------------------------------------------------#
+#------------------------------------------------------- Schedule Source API ------------------------------------------------------#
 class ScheduleSourceAPI(BaseAuth):
     """
     Schedule Source API client for handling employee availability data.
@@ -42,7 +43,7 @@ class ScheduleSourceAPI(BaseAuth):
     """
 
 
-    #------------------------------------------------------------------------ Constructor ------------------------------------------------------------------------#
+#------------------------------------------------------- Constructor ------------------------------------------------------#
     def __init__(self, auth_url: str, credentials: dict):
         """
         Initialize the Schedule Source API client.
@@ -60,7 +61,7 @@ class ScheduleSourceAPI(BaseAuth):
         self.authenticate()
 
     
-    #------------------------------------------------------------------------ Get Global Availability ------------------------------------------------------------------------#
+#------------------------------------------------------- Get Global Availability ------------------------------------------------------#
     def get_global_availability(self, EmployeeExternalId: str) -> dict:
         """
         Fetch an employee's global availability ranges from Schedule Source.
@@ -137,7 +138,7 @@ class ScheduleSourceAPI(BaseAuth):
             raise  # Re-raise the exception to propagate the error
 
 
-#------------------------------------------------------------------------ Test section ------------------------------------------------------------------------#    
+#------------------------------------------------------- Test Section ------------------------------------------------------#  
 if __name__ == "__main__":
     """
     Test functionality of the ScheduleSourceAPI class.

@@ -1,24 +1,32 @@
-// Wait for the HTML document to be fully loaded before running any code
+// ==========================================================================
+// Schedule Generator Form Handler
+// This script manages the schedule generation form, handles API interactions,
+// and provides user feedback through loading states and alerts
+// ==========================================================================
+
 document.addEventListener("DOMContentLoaded", function () {
-  // Get references to HTML elements we need to interact with
+  // Cache DOM Elements
+  // Get references to frequently used DOM elements to avoid repeated queries
   const form = document.getElementById("gridForm");
   const errorAlert = document.getElementById("errorAlert");
   const successAlert = document.getElementById("successAlert");
   const submitButton = form.querySelector('button[type="submit"]');
 
-  // Add loading spinner to button
+  // Initialize Loading Spinner
+  // Create and configure the loading spinner element for the submit button
   const spinner = document.createElement("span");
   spinner.className = "spinner-border spinner-border-sm me-2 d-none";
   spinner.setAttribute("role", "status");
   submitButton.prepend(spinner);
 
+  // Loading State Management
+  // Controls the visual feedback during form submission
   function setLoading(isLoading) {
-    // Show/hide loading spinner and disable/enable button
     spinner.classList.toggle("d-none", !isLoading);
     submitButton.disabled = isLoading;
     submitButton.classList.toggle("loading", isLoading);
 
-    // Preserve the button's red theme while loading
+    // Update button text and maintain styling during loading state
     if (isLoading) {
       submitButton.innerHTML =
         '<span class="spinner-border spinner-border-sm me-2"></span>Generating...';
@@ -27,6 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Button Factory Function
+  // Creates consistent action buttons with specified properties
   function createActionButton(text, className, clickHandler) {
     const button = document.createElement("button");
     button.textContent = text;
@@ -35,64 +45,64 @@ document.addEventListener("DOMContentLoaded", function () {
     return button;
   }
 
-  // Add event listener for form submission
+  // Form Submission Handler
+  // Manages the entire form submission process and response handling
   form.addEventListener("submit", async function (e) {
-    // Prevent the default form submission (page reload)
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
 
-    // Hide any existing alert messages
+    // Reset UI State
+    // Clear any existing alerts and action buttons
     errorAlert.style.display = "none";
     successAlert.style.display = "none";
     const existingButtons = document.getElementById("actionButtons");
     if (existingButtons) existingButtons.remove();
 
-    // Get the employee ID from the input field
+    // Get Form Data
     const externalId = document.getElementById("external_id").value;
 
-    // Show loading state
-    setLoading(true);
+    setLoading(true); // Activate loading state
 
     try {
-      // Send POST request to our backend
+      // API Request
+      // Send schedule generation request to backend
       const response = await fetch("/generate", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Tell server we're sending JSON
+          "Content-Type": "application/json",
         },
-        // Convert our data to JSON string
         body: JSON.stringify({ external_id: externalId }),
       });
 
-      // Parse the JSON response from the server
       const data = await response.json();
 
+      // Success Handler
+      // Display success message and create download button
       if (response.ok) {
-        // If request was successful, show success message
         successAlert.textContent = data.message;
         successAlert.style.display = "block";
         successAlert.className = "alert alert-success";
 
-        // Create container for buttons
+        // Create and append download button
         const buttonContainer = document.createElement("div");
         buttonContainer.id = "actionButtons";
         buttonContainer.className = "mt-3";
 
-        // Create download button with direct download
         const downloadButton = createActionButton(
           "📥 Download Schedule",
           "btn-primary",
           () => (window.location.href = `/download/${data.external_id}`)
         );
 
-        // Add button to container
         buttonContainer.appendChild(downloadButton);
         successAlert.after(buttonContainer);
-      } else {
-        // If server returned an error, show error message
+      }
+      // Error Handler
+      // Display appropriate error messages based on response status
+      else {
         errorAlert.textContent = data.error;
         errorAlert.style.display = "block";
 
-        // Special styling for "no schedule" case
+        // Special case for 404 (no schedule found)
         if (response.status === 404) {
           errorAlert.className = "alert alert-warning";
         } else {
@@ -100,13 +110,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     } catch (error) {
-      // If something went wrong with the request, show error
+      // Network Error Handler
+      // Handle cases where the server cannot be reached
       errorAlert.textContent = "Failed to connect to server";
       errorAlert.style.display = "block";
       errorAlert.className = "alert alert-danger";
     } finally {
-      // Hide loading state
-      setLoading(false);
+      // Cleanup
+      setLoading(false); // Reset loading state regardless of outcome
     }
   });
 });
