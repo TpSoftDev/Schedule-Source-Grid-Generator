@@ -1,33 +1,151 @@
+/* Color Variables */
+:root {
+  --isu-red: #c8102e;
+  --warm-wood: #deb887;
+  --light-gray: #f8f9fa;
+  --off-white: #fff9f5;
+  --dark-text: #2c2c2c;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: var(--isu-red);
+    padding: 1.25rem 2.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-brand {
+    padding: 0;
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Logo styling options - try each one separately to see which works best */
+.nav-logo {
+          height: 45px;
+          width: auto;
+          mix-blend-mode: multiply;
+}
+
+/* Create a subtle gradient overlay */
+.navbar-brand::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        var(--isu-red) 0%,
+        transparent 5%,
+        transparent 95%,
+        var(--isu-red) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+.nav-logo:hover {
+    transform: scale(1.02);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1.25rem;
+    margin-left: auto;
+}
+
+.btn-outline-light {
+    border: 2px solid rgba(255,255,255,0.85);
+    font-weight: 500;
+    padding: 0.625rem 1.5rem;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+}
+
+.btn-light {
+    background: white;
+    color: var(--isu-red);
+    font-weight: 500;
+    padding: 0.625rem 1.5rem;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+    border: 2px solid white;
+}
+
+.btn-outline-light:hover {
+    transform: translateY(-2px);
+    background-color: rgba(255,255,255,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: white;
+}
+
+.btn-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: rgba(255,255,255,0.95);
+}
+
+/* Main content styles */
 body {
-    font-family: Arial, sans-serif;
-    padding-top: 40px;
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: var(--off-white);
+    padding-top: 80px;
+    color: var(--dark-text);
 }
 
 .container {
-    max-width: 600px;
+    max-width: 800px;
+    padding: 2rem;
 }
 
 .form-container {
-    background-color: #f8f9fa;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border: 1px solid rgba(200,16,46,0.1);
 }
 
-.alert {
-    display: none;
-    margin-top: 20px;
+h1 {
+    color: var(--isu-red);
+    font-weight: 600;
+    margin-bottom: 2rem;
 }
 
-#actionButtons {
-    margin-top: 1rem;
+.form-label {
+    font-weight: 500;
+    color: var(--dark-text);
 }
 
-.btn {
+.form-control {
+    border: 2px solid #e9ecef;
+    padding: 0.75rem;
+    border-radius: 8px;
     transition: all 0.3s ease;
 }
 
-.btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.form-control:focus {
+    border-color: var(--isu-red);
+    box-shadow: 0 0 0 3px rgba(200,16,46,0.1);
+}
+
+.btn-primary {
+    background-color: var(--isu-red);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #a50d26;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(200,16,46,0.2);
 }
