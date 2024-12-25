@@ -1,32 +1,65 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
   <head>
     <title>Schedule Source Grid Generator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .form-container {
-            margin: 20px 0;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
+    <!-- Bootstrap CSS for styling and responsive design -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Our custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
   </head>
   <body>
-    <h1>Schedule Source Grid Generator</h1>
-    
-    <div class="form-container">
-        <form method="POST">
-            <label for="external_id">Employee External ID:</label><br>
-            <input type="text" id="external_id" name="external_id" required><br><br>
-            <button type="submit">Submit</button>
+    <!-- Main container to center content and limit width -->
+    <div class="container">
+      <h1 class="text-center mb-4">Schedule Source Grid Generator</h1>
+
+      <!-- Form container with styling -->
+      <div class="form-container">
+        <!-- Form that will be handled by JavaScript -->
+        <form id="gridForm" method="POST" action="/generate">
+          <div class="mb-3">
+            <label for="external_id" class="form-label"
+              >Employee External ID:</label
+            >
+            <!-- Input field for employee ID -->
+            <input
+              type="text"
+              class="form-control"
+              id="external_id"
+              name="external_id"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">
+            Generate Schedule
+          </button>
         </form>
+      </div>
+
+      <!-- Alert containers for showing messages to user -->
+      <!-- These are hidden by default and shown via JavaScript -->
+      <div
+        class="alert alert-danger"
+        id="errorAlert"
+        style="display: none"
+        role="alert"
+      ></div>
+      <div
+        class="alert alert-success"
+        id="successAlert"
+        style="display: none"
+        role="alert"
+      ></div>
     </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Our custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </body>
 </html>
