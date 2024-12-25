@@ -1,0 +1,1 @@
+#TODO: Add tests for the base auth API
