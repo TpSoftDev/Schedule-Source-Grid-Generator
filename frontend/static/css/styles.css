@@ -25,7 +25,7 @@
 
 /* Logo styling options - try each one separately to see which works best */
 .nav-logo {
-          height: 45px;
+          height: 50px;
           width: auto;
           mix-blend-mode: multiply;
 }
@@ -148,4 +148,15 @@ h1 {
     background-color: #a50d26;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(200,16,46,0.2);
+}
+
+.btn-primary.loading {
+    background-color: var(--isu-red);
+    opacity: 0.8;
+    cursor: wait;
+}
+
+.spinner-border {
+    border-color: white;
+    border-right-color: transparent;
 }

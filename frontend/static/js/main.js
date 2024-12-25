@@ -16,9 +16,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show/hide loading spinner and disable/enable button
     spinner.classList.toggle("d-none", !isLoading);
     submitButton.disabled = isLoading;
-    submitButton.textContent = isLoading
-      ? "Generating..."
-      : "Generate Schedule";
+    submitButton.classList.toggle("loading", isLoading);
+
+    // Preserve the button's red theme while loading
+    if (isLoading) {
+      submitButton.innerHTML =
+        '<span class="spinner-border spinner-border-sm me-2"></span>Generating...';
+    } else {
+      submitButton.innerHTML = "Generate Schedule";
+    }
   }
 
   function createActionButton(text, className, clickHandler) {
